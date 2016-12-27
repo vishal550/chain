@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+ <table border = "1">
+             
+            <tr ng-repeat="x in grid">
+			
+               <td ng-repeat="y in x.col" ng-click="countInc(y)" width="80">{{y.count}}<span ng-show="count"></span></td>
+			 
+              <!-- 
+			 td width="30"><div ng-show="count"><div></td>
+			   <td width="30"><div ng-show="count"><div></td>
+               <td width="30"><div ng-show="count"><div></td>
+			   <td width="30"><div ng-show="count"><div></td>
+               <td width="30"><div ng-show="count"><div></td> 
+               <td width="30"><div ng-show="count"><div></td>
+               <td width="30"><div ng-show="count"><div></td>-->
+            </tr>
+ 
+         </table>
+
+<script>
+var app = angular.module("myApp", []);
+function initial(id) {
+    this.id=id;
+    this.count = 0;
+    this.flag = false;
+
+}
+app.controller("myCtrl", function($scope) {
+  $scope.countInc=function(y){
+
+    y.count+=1;
+	//debugger
+     split(y);
+	
+	}<!--funtion closing-->
+	
+ 
+  $scope.grid = [
+         {col: [new initial(1),new initial(2),new initial(3),new initial(4),new initial(5),new initial(6),new initial(7),new initial(8)]},
+         {col: [new initial(9),new initial(10),new initial(11),new initial(12),new initial(13),new initial(14),new initial(15),new initial(16)]},
+         {col: [new initial(17),new initial(18),new initial(19),new initial(20),new initial(21),new initial(22),new initial(23),new initial(24)]},
+         {col: [new initial(25),new initial(26),new initial(27),new initial(28),new initial(29),new initial(30),new initial(31),new initial(32)]},
+		 {col: [new initial(33),new initial(34),new initial(35),new initial(36),new initial(37),new initial(38),new initial(39),new initial(40)]},
+         {col: [new initial(41),new initial(42),new initial(43),new initial(44),new initial(45),new initial(46),new initial(47),new initial(48)]},
+		 {col: [new initial(49),new initial(50),new initial(51),new initial(52),new initial(53),new initial(54),new initial(55),new initial(56)]},
+         {col: [new initial(57),new initial(58),new initial(59),new initial(60),new initial(61),new initial(62),new initial(63),new initial(64)]},
+  ]
+    function chain(y){
+	      debugger
+		   
+		     if(y.id==1||y.id==8||y.id==64||y.id==57)
+                  {
+				    
+			         if(y.count>=2)
+                         { 
+						    split(y);
+						 }					 
+				  }
+				  else if(y.id>1&&y.id<8||(y.id>57&&y.id<64)||(y.id%8===0)||y.id==9||y.id==17||y.id==25||y.id==33||y.id==41||y.id==49||y.id==57)
+				  {
+				     if(y.count>=3)
+					 { 
+					     console.log(y.id+"inside=3");
+					     split(y);
+					 }
+				  }
+				  else
+				  {
+				      if(y.count>=4)
+					  {
+					      
+					      split(y);
+					  }
+				  }
+			  
+            
+	}
+	function split(y)
+	{
+	//debugger
+	//console.log(y);
+	     <!--corner -->
+	  /*   if(y.id==1||y.id==8||y.id==64||y.id==57)
+	{
+              if(y.count>=2){ 
+                 
+				 if(y.id==1){
+				    
+                     $scope.grid[0].col[1].count+=1;
+					 $scope.grid[1].col[0].count+=1;
+					 y.count-=2;
+					
+				 chain($scope.grid[0].col[1]);
+				 chain($scope.grid[1].col[0]);
+					 }
+				 if(y.id==8){
+				     $scope.grid[0].col[6].count+=1;
+		             $scope.grid[1].col[7].count+=1;
+					 y.count-=2;
+					 chain($scope.grid[0].col[6]);
+					 chain($scope.grid[1].col[7]);
+				 }
+				 if(y.id==64){
+				     $scope.grid[6].col[7].count+=1;
+		             $scope.grid[7].col[6].count+=1;
+					 y.count-=2;
+					 chain($scope.grid[6].col[7]);
+					 chain($scope.grid[7].col[6]);
+				 }
+				  if(y.id==57){
+				     $scope.grid[6].col[0].count+=1;
+		             $scope.grid[7].col[1].count+=1;
+					 y.count-=2;
+					 chain($scope.grid[6].col[0]);
+					 chain($scope.grid[7].col[1]);
+				 }
+				 
+                }
+              
+    }
+	<!--side row and column -->
+	else if(y.id>1&&y.id<8||(y.id>57&&y.id<64)||(y.id%8===0)||y.id==9||y.id==17||y.id==25||y.id==33||y.id==41||y.id==49||y.id==57)
+    {       
+
+	         if(y.count>=3){
+			               
+					     if(y.id>1&&y.id<8){
+					         $scope.grid[Math.floor(y.id/8)+1].col[y.id-1].count+=1;
+						     $scope.grid[Math.floor(y.id/8)].col[y.id].count+=1;
+						     $scope.grid[Math.floor(y.id/8)].col[y.id-2].count+=1;
+							 y.count-=3;
+							chain($scope.grid[Math.floor(y.id/8)+1].col[y.id-1]);
+							chain($scope.grid[Math.floor(y.id/8)].col[y.id]);
+							chain($scope.grid[Math.floor(y.id/8)].col[y.id-2]);
+						    }
+						 else if(y.id>57&&y.id<64)
+						 {
+						     $scope.grid[6].col[y.id%8-1].count+=1;
+						     $scope.grid[7].col[y.id%8].count+=1;
+						     $scope.grid[7].col[y.id%8-2].count+=1;
+							 y.count-=3;
+							chain($scope.grid[6].col[y.id%8-1]);
+							chain($scope.grid[7].col[y.id%8]);
+							chain($scope.grid[7].col[y.id%8-2]);
+						 }
+						 else if(y.id%8===0){
+						     $scope.grid[Math.floor(y.id/8)-1].col[6].count+=1;
+						     $scope.grid[Math.floor(y.id/8)].col[7].count+=1;
+						     $scope.grid[Math.floor(y.id/8)-2].col[7].count+=1;
+							 y.count-=3;
+							 chain($scope.grid[Math.floor(y.id/8)-1].col[6]);
+							 chain($scope.grid[Math.floor(y.id/8)].col[7]);
+							 chain($scope.grid[Math.floor(y.id/8)-2].col[7]);
+							 
+						 }
+						else{
+
+						      $scope.grid[Math.floor(y.id/8)].col[1].count+=1;
+						     $scope.grid[Math.floor(y.id/8)-1].col[0].count+=1;
+						     $scope.grid[Math.floor(y.id/8)+1].col[0].count+=1;
+							 y.count-=3;
+							 
+							 chain($scope.grid[Math.floor(y.id/8)].col[1]);
+							 chain($scope.grid[Math.floor(y.id/8)-1].col[0]);
+							 chain($scope.grid[Math.floor(y.id/8)+1].col[0]);
+							 
+							 
+						}
+						
+					 }
+					
+			    
+				
+	 } 
+	 <!--center -->
+	 else{
+	// console.log("inside 10")
+	     if(y.count>=4){
+		        
+		            $scope.grid[Math.floor(y.id/8)].col[y.id%8].count+=1;
+					 $scope.grid[Math.floor(y.id/8)].col[y.id%8-2].count+=1;
+				    $scope.grid[Math.floor(y.id/8)-1].col[y.id%8-1].count+=1;
+				    $scope.grid[Math.floor(y.id/8)+1].col[y.id%8-1].count+=1;
+					y.count-=4;
+					chain($scope.grid[Math.floor(y.id/8)].col[y.id%8]);
+					chain($scope.grid[Math.floor(y.id/8)].col[y.id%8-2]);
+					chain($scope.grid[Math.floor(y.id/8)-1].col[y.id%8-1]);
+					chain($scope.grid[Math.floor(y.id/8)+1].col[y.id%8-1]);
+		           
+		 }
+		 
+	 }*/
+	
+	    var stack=new Array();
+		stack.push(y);
+		while(stack.length!==0)
+		{   
+		     var element=stack.pop();
+		    if(element.id==1||element.id==8||element.id==64||element.id==57){
+	
+              if(element.count>=2){ 
+                 
+				 if(element.id==1){
+				    
+                     $scope.grid[0].col[1].count+=1;
+					 $scope.grid[1].col[0].count+=1;
+					 element.count-=2;
+	                   stack.push($scope.grid[0].col[1]);				
+				       stack.push($scope.grid[1].col[0]);
+					}
+					
+				 if(element.id==8){
+				     $scope.grid[0].col[6].count+=1;
+		             $scope.grid[1].col[7].count+=1;
+					 element.count-=2;
+			         stack.push($scope.grid[0].col[6]);				
+				  stack.push($scope.grid[1].col[7]);
+					 	 
+				 }
+				 
+				 
+				 if(element.id==64){
+				     $scope.grid[6].col[7].count+=1;
+		             $scope.grid[7].col[6].count+=1;
+					 element.count-=2;
+		              stack.push($scope.grid[6].col[7]);	
+					  stack.push($scope.grid[7].col[6]);
+					  
+				 }
+				 
+				 
+				  if(element.id==57){
+				     $scope.grid[6].col[0].count+=1;
+		             $scope.grid[7].col[1].count+=1;
+					 element.count-=2;
+					 stack.push($scope.grid[6].col[0]);
+				     stack.push($scope.grid[7].col[1]);
+					 
+					  
+				 }
+				 
+                }
+              
+            //count checking if ending
+	       
+		}//id checking if ending
+		    <!--side row and column -->
+	    else if(element.id>1&&element.id<8||(element.id>57&&element.id<64)||(element.id%8===0)||element.id==9||element.id==17||element.id==25||element.id==33||element.id==41||element.id==49||element.id==57)
+          {       
+
+	         if(element.count>=3){
+			               
+					     if(element.id>1&&element.id<8){
+					         $scope.grid[Math.floor(element.id/8)+1].col[element.id-1].count+=1;
+						     $scope.grid[Math.floor(element.id/8)].col[element.id].count+=1;
+						     $scope.grid[Math.floor(element.id/8)].col[element.id-2].count+=1;
+							 element.count-=3;
+							
+							stack.push($scope.grid[Math.floor(element.id/8)+1].col[element.id-1]);
+							stack.push($scope.grid[Math.floor(element.id/8)].col[element.id]);
+							stack.push($scope.grid[Math.floor(element.id/8)].col[element.id-2]);
+							
+						    }
+							
+						 else if(element.id>57&&element.id<64)
+						 {
+						     $scope.grid[6].col[element.id%8-1].count+=1;
+						     $scope.grid[7].col[element.id%8].count+=1;
+						     $scope.grid[7].col[element.id%8-2].count+=1;
+							 element.count-=3;
+							 
+							stack.push($scope.grid[6].col[element.id%8-1]);
+						    stack.push($scope.grid[7].col[element.id%8]);
+							stack.push($scope.grid[7].col[element.id%8-2]);
+							
+						 }
+						 else if(element.id%8===0){
+						     $scope.grid[Math.floor(element.id/8)-1].col[6].count+=1;
+						     $scope.grid[Math.floor(element.id/8)].col[7].count+=1;
+						     $scope.grid[Math.floor(element.id/8)-2].col[7].count+=1;
+							 element.count-=3;
+							 
+							 stack.push($scope.grid[Math.floor(element.id/8)-1].col[6]);
+						     stack.push($scope.grid[Math.floor(element.id/8)].col[7]);
+							 stack.push($scope.grid[Math.floor(element.id/8)-2].col[7]);
+							 
+							 
+						 }
+						 
+						else{
+
+						      $scope.grid[Math.floor(element.id/8)].col[1].count+=1;
+						     $scope.grid[Math.floor(element.id/8)-1].col[0].count+=1;
+						     $scope.grid[Math.floor(element.id/8)+1].col[0].count+=1;
+							 element.count-=3;
+							
+							 stack.push($scope.grid[Math.floor(element.id/8)].col[1]);
+						     stack.push($scope.grid[Math.floor(element.id/8)-1].col[0]);
+					         stack.push($scope.grid[Math.floor(element.id/8)+1].col[0]);
+							 
+							 
+						}
+						
+					 }
+			 } //else if side ending
+			  <!--center -->
+	 else{
+	// console.log("inside 10")
+	     if(element.count>=4){
+		        
+		            $scope.grid[Math.floor(element.id/8)].col[element.id%8].count+=1;
+					 $scope.grid[Math.floor(element.id/8)].col[element.id%8-2].count+=1;
+				    $scope.grid[Math.floor(element.id/8)-1].col[element.id%8-1].count+=1;
+				    $scope.grid[Math.floor(element.id/8)+1].col[element.id%8-1].count+=1;
+					element.count-=4;
+					
+					stack.push($scope.grid[Math.floor(element.id/8)].col[element.id%8]);
+					stack.push($scope.grid[Math.floor(element.id/8)].col[element.id%8-2]);
+					stack.push($scope.grid[Math.floor(element.id/8)-1].col[element.id%8-1]);
+			        stack.push($scope.grid[Math.floor(element.id/8)+1].col[element.id%8-1]);
+					
+		           
+		 }
+		 
+	 }//else ending
+	       
+	}//while ending
+	}
+	<!--split ending-->
+});
+</script>
+
+</body>
+</html>
